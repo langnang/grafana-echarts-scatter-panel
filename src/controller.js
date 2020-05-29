@@ -3,7 +3,7 @@ import _ from 'lodash';
 import kbn from 'app/core/utils/kbn';
 import $ from 'jquery';
 import echarts from './libs/echarts.min';
-// import echartsOption from './echarts_option';
+import echartsOption from './echarts_option';
 import './libs/dark';
 import './style.css!';
 
@@ -56,63 +56,31 @@ export class Controller extends MetricsPanelCtrl {
           }
         },
         seriesData: [],
-        scatterDefault: {
-          data: [
-          ],
-          type: 'scatter',
-          refId: ""
-        },
         option: {
           color: ['#c23531', '#2f4554', '#61a0a8', '#d48265', '#91c7ae', '#749f83', '#ca8622', '#bda29a', '#6e7074', '#546570', '#c4ccd3'],
-          grid: {
-
-          },
-          legend: {
-            show: false,
-            data: [],
-          },
-          tooltip: {
-            show: true,
-            trigger: "item",
-            axisPointer: {
-              type: "line",
-            },
-            textStyle:{
-              color:"#ececec",
-              fontSize:7,
-              lineHeight:25
-            },
-            backgroundColor:"rgba(20,20,20,0.9)",
-            padding:[10,13]
-            
-          },
           xAxis: {
-            splitLine: {
-              show: false,
-            },
-            name: "",
-            nameLocation: "middle",
+            type: 'category',
+            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
           },
           yAxis: {
-            splitLine: {
-              show: false,
-            },
-            name: "",
-            nameLocation: "middle",
+            type: 'value'
           },
-          series: [],
+          series: [{
+            data: [820, 932, 901, 934, 1290, 1330, 1320],
+            type: 'line'
+          }]
         }
       }
     };
 
     _.defaults(this.panel, panelDefaults);
     // 更新Option設置
-    // this.updateOption();
+    this.updateOption();
     // 更新echarts.typeList
-    // this.refreshEchartsTypeList();
+    this.refreshEchartsTypeList();
 
-    // console.log(this.panel);
-    // console.log(this.panel.echarts);
+    console.log(this.panel);
+    console.log(this.panel.echarts);
 
 
     this.dataFormatter = new DataFormatter(this, kbn);
@@ -129,109 +97,24 @@ export class Controller extends MetricsPanelCtrl {
 
 
   onDataReceived(dataList) {
-    // console.group("onDataReceived");
-    // console.log(dataList);
-    // init
-    _.forEach(dataList, (value, key) => {
-      if (value.type !== 'table') {
-
-        console.log("type Error");
-
-      } else {
-        let scatter = this.panel.echarts.scatterDefault;
-        let data = [];
-        _.forEach(value.rows, (val, k) => {
-          data.push([val[0], val[1]]);
-        });
-        if (this.panel.echarts.option.series[key] == undefined) {
-          this.panel.echarts.option.series[key] = {};
-        }
-        this.panel.echarts.option.series[key].type = scatter.type;
-        this.panel.echarts.option.series[key].data = data;
-        this.panel.echarts.option.series[key].refId = value.refId;
-        this.panel.echarts.option.series[key].label = scatter.label;
-        this.panel.echarts.option.series[key].markLine = this.panel.echarts.option.series[key].markLine ? this.panel.echarts.option.series[key].markLine : {
-          show: false
-        };
-
-        if (this.panel.echarts.option.series[key].markLine.show) {
-          if (this.panel.echarts.option.series[key].markLine.data == undefined) {
-            this.panel.echarts.option.series[key].markLine = {
-              show: true,
-              data: [
-                { xAxis: "" },
-                { yAxis: "" },
-              ],
-              itemStyle: {
-                normal: {
-                  label: {
-                    show: false,
-                  },
-                }
-              },
-              lineStyle: {
-                normal: {
-                  type: "solid",
-                }
-              },
-              tooltip: {
-                show: false,
-              },
-              symbol: ['none', 'none'],
-
-
-            };
-
-          } else {
-            this.panel.echarts.option.series[key].markLine.symbol = [
-              this.panel.echarts.option.series[key].markLine.symbol[0] ? this.panel.echarts.option.series[key].markLine.symbol[0] : "none",
-              this.panel.echarts.option.series[key].markLine.symbol[1] ? this.panel.echarts.option.series[key].markLine.symbol[1] : "none"
-            ];
-            this.panel.echarts.option.series[key].markLine.data = [{ xAxis: this.panel.echarts.option.series[key].markLine.data[0].xAxis ? this.panel.echarts.option.series[key].markLine.data[0].xAxis : "" },
-            { yAxis: this.panel.echarts.option.series[key].markLine.data[1].yAxis ? this.panel.echarts.option.series[key].markLine.data[1].yAxis : "" }];
-          }
-        } else {
-          this.panel.echarts.option.series[key].markLine = {
-            show: false
-          };
-        }
-        this.panel.echarts.option.legend.data[key] = this.panel.echarts.option.series[key].name ? this.panel.echarts.option.series[key].name : "";
-      }
-    });
-    // this.panel.echarts.seriesData = dataList;
+    console.group("onDataReceived");
+    this.panel.echarts.seriesData = dataList;
     //重組datalist
-    // this.rebuildDataList();
+    this.rebuildDataList();
 
     //重組series并且根據type類型對數據再次處理
-    // this.rebuildSeries();
+    this.rebuildSeries();
 
     //this.rebuildSeriesData(seriesData);
 
-    this.rebuildTooltips();
 
     this.refreshed = true;
     this.render();
     this.refreshed = false;
-    // console.groupEnd("onDataReceived");
+    console.groupEnd("onDataReceived");
 
   }
 
-  // 辅助线样式调整
-  rebuildTooltips() {
-    const x = this.panel.echarts.option.xAxis.name;
-    const y = this.panel.echarts.option.yAxis.name;
-    this.panel.echarts.option.tooltip.formatter = (params) => {
-      let mat = `<p style="margin-bottom:9px;font-weight:bold;">${params.seriesName}</p>`;
-      if (x === "" && y === "") {
-        mat += `<b>${params.value[0]},${params.value[1]}</b>`;
-      } else {
-        mat += `<p style="margin-bottom:5px;"><small>${x}:</small>&nbsp;&nbsp;&nbsp;&nbsp;<b>${params.value[0]}</b></p>
-        <p style="margin-bottom:0px;"><small>${y}:</small>&nbsp;&nbsp;&nbsp;&nbsp;<b>${params.value[1]}</b></p>`;
-      }
-
-      return mat;
-    };
-  }
 
   updateOption() {
     // 基於reserveOption中各個show來判斷是否
@@ -250,11 +133,11 @@ export class Controller extends MetricsPanelCtrl {
       this.panel.echarts.typeList.push(_.toLower(key));
     }
     // console.log(this.panel.echarts.typeList);
-    // console.groupEnd("refreshEchartsTypeList");
+    console.groupEnd("refreshEchartsTypeList");
   }
   // 重組data數據
   rebuildDataList() {
-    // console.group("rebuildDataList");
+    console.group("rebuildDataList");
     const seriesData = [];
     //const indexOfrefId = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
     var refId = '';
@@ -274,12 +157,12 @@ export class Controller extends MetricsPanelCtrl {
       seriesData[seriesData.length - 1].time = _.unzip(value.datapoints)[1];
       seriesData[seriesData.length - 1][value.target] = value.datapoints;
     });
-    // console.groupEnd("rebuildDataList");
+    console.groupEnd("rebuildDataList");
     this.panel.echarts.seriesData = seriesData;
   }
   // 重組series
   rebuildSeries() {
-    // console.group("rebuildSeries");
+    console.group("rebuildSeries");
     for (let i = 0; i <= this.panel.echarts.seriesData.length - 1; i++) {
       // 不存在添加基本數據
       if (_.isUndefined(this.panel.echarts.option.series[i])) {
@@ -302,13 +185,13 @@ export class Controller extends MetricsPanelCtrl {
       }
       //this.panel.echarts.option.series[i].data = this.rebuildSeriesData(this.panel.echarts.option.series[i].type, dataList[i]);
     }
-    // console.log(this.panel.echarts.option.series);
-    // console.groupEnd("rebuildSeries");
+    console.log(this.panel.echarts.option.series);
+    console.groupEnd("rebuildSeries");
   }
 
   rebuildSeriesData(dataList) {
-    // console.group("rebuildSeriesData");
-    // console.log(dataList);
+    console.group("rebuildSeriesData");
+    console.log(dataList);
     const seriesData = [];
     for (var i = 0; i <= dataList.length - 1; i++) {
 
@@ -342,8 +225,8 @@ export class Controller extends MetricsPanelCtrl {
     //   default:
     //     break;
     // }
-    // console.log(seriesData);
-    // console.groupEnd("rebuildSeriesData");
+    console.log(seriesData);
+    console.groupEnd("rebuildSeriesData");
     return seriesData;
   }
 
@@ -369,9 +252,9 @@ export class Controller extends MetricsPanelCtrl {
     this.refresh();
   }
   onDataError(err) {
-    // console.group('onDataError');
+    console.group('onDataError');
     this.render();
-    // console.groupEnd('onDataError');
+    console.groupEnd('onDataError');
   }
 
   onInitEditMode() {
@@ -423,7 +306,7 @@ export class Controller extends MetricsPanelCtrl {
       myChart.resize();
     }, 1000);
     function render() {
-      // console.group("render");
+      console.group("render");
       if (!myChart) {
         return;
       }
@@ -431,8 +314,8 @@ export class Controller extends MetricsPanelCtrl {
       myChart.resize();
       if (ctrl.refreshed) {
         myChart.clear();
-        // console.log(ctrl.panel.echarts.option);
-        // console.log(JSON.stringify(ctrl.panel.echarts.option));
+        console.log(ctrl.panel.echarts.option);
+        console.log(JSON.stringify(ctrl.panel.echarts.option));
         myChart.setOption(ctrl.panel.echarts.option, true);
         // if (ctrl.panel.echarts.option.series !== undefined) {
         //   _.forEach(ctrl.panel.echarts.option.series, function (value_s, key_s) {
@@ -459,7 +342,7 @@ export class Controller extends MetricsPanelCtrl {
         //   //console.log(ctrl.panel.echarts.option);
         // }
       }
-      // console.groupEnd("render");
+      console.groupEnd("render");
     }
     this.events.on('render', function () {
       render();
