@@ -137,16 +137,15 @@
                 </div> -->
             <div class="section gf-form-group">
                 <h5 class="section-heading">Mark Line</h5>
-                <div class="gf-form" checked="ctrl.panel.echarts.option.series[index].markLine.show"
-                    on-change="ctrl.refresh()">
-                    <label for="check-legend-show" class="gf-form-label width-7">show</label>
-                    <div class="gf-form-switch ">
-                        <input id="check-legend-show" type="checkbox"
+                <label for="check-markLine-{{index}}-show" class="gf-form-switch-container" on-change="ctrl.refresh()">
+                    <div class="gf-form-label width-7"> show </div>
+                    <div class="gf-form-switch">
+                        <input id="check-markLine-{{index}}-show" type="checkbox"
                             ng-model="ctrl.panel.echarts.option.series[index].markLine.show" ng-change="ctrl.refresh()"
-                            class="ng-pristine ng-untouched ng-valid ng-not-empty">
-                        <label for="check-legend-show" data-on="Yes" data-off="No"></label>
+                            class="ng-valid ng-dirty ng-valid-parse ng-touched ng-not-empty">
+                        <span class="gf-form-switch__slider"></span>
                     </div>
-                </div>
+                </label>
                 <div ng-show="ctrl.panel.echarts.option.series[index].markLine.show">
                     <!-- lineStyle.normal.type -->
                     <div class="gf-form">

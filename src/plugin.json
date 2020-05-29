@@ -5,23 +5,23 @@
   "info": {
     "description": "Echarts Scatter Panel",
     "author": {
-      "name": "Advantech",
+      "name": "Langnang",
       "url": "http://grafana.com"
     },
     "keywords": [
       "panel"
     ],
     "logos": {
-      "small": "https://www.echartsjs.com/images/favicon.png",
-      "large": "https://www.echartsjs.com/images/favicon.png"
+      "small": "src/img/logo.png",
+      "large": "src/img/logo.png"
     },
     "links": [],
     "screenshots": [],
-    "version": "2.0.3",
-    "updated": "2019-6-14"
+    "version": "3.0.0",
+    "updated": "2020-05-29"
   },
   "dependencies": {
-    "grafanaVersion": "5.0",
+    "grafanaVersion": "6.5.2",
     "plugins": []
   }
 }

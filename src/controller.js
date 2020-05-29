@@ -1,7 +1,6 @@
 import { MetricsPanelCtrl } from 'app/plugins/sdk';
 import _ from 'lodash';
 import kbn from 'app/core/utils/kbn';
-import $ from 'jquery';
 import echarts from './libs/echarts.min';
 // import echartsOption from './echarts_option';
 import './libs/dark';
@@ -77,14 +76,14 @@ export class Controller extends MetricsPanelCtrl {
             axisPointer: {
               type: "line",
             },
-            textStyle:{
-              color:"#ececec",
-              fontSize:7,
-              lineHeight:25
+            textStyle: {
+              color: "#ececec",
+              fontSize: 7,
+              lineHeight: 25
             },
-            backgroundColor:"rgba(20,20,20,0.9)",
-            padding:[10,13]
-            
+            backgroundColor: "rgba(20,20,20,0.9)",
+            padding: [10, 13]
+
           },
           xAxis: {
             splitLine: {
@@ -408,7 +407,7 @@ export class Controller extends MetricsPanelCtrl {
     const $panelContainer = elem.find('.echarts_container')[0];
     ctrl.refreshed = true;
     function setHeight() {
-      let height = ctrl.height || panel.height || ctrl.row.height;
+      let height = ctrl.height || ctrl.panel.height;
       if (_.isString(height)) {
         height = parseInt(height.replace('px', ''), 10);
       }

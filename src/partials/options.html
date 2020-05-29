@@ -3,14 +3,14 @@
     <div class="section gf-form-group">
         <h5 class="section-heading">legend</h5>
         <!-- legend.show -->
-        <div class="gf-form" checked="ctrl.panel.echarts.option.legend.show" on-change="ctrl.refresh()">
-            <label for="check-legend-show" class="gf-form-label width-7">show</label>
-            <div class="gf-form-switch ">
+        <label for="check-legend-show" class="gf-form-switch-container" on-change="ctrl.refresh()">
+            <div class="gf-form-label width-7"> show </div>
+            <div class="gf-form-switch">
                 <input id="check-legend-show" type="checkbox" ng-model="ctrl.panel.echarts.option.legend.show"
-                    ng-change="ctrl.refresh()" class="ng-pristine ng-untouched ng-valid ng-not-empty">
-                <label for="check-legend-show" data-on="Yes" data-off="No"></label>
+                    ng-change="ctrl.refresh()" class="ng-valid ng-dirty ng-valid-parse ng-touched ng-not-empty">
+                <span class="gf-form-switch__slider"></span>
             </div>
-        </div>
+        </label>
         <div ng-show="ctrl.panel.echarts.option.legend.show">
             <div class="gf-form">
                 <label class="gf-form-label width-7">type</label>
@@ -90,16 +90,15 @@
                 ng-value="ctrl.panel.echarts.option.grid.bottom" placeholder="60">
         </div>
         <!-- grid.containLabel -->
-        <div class="gf-form" label="Show" label-class="width-7" checked="ctrl.panel.echarts.option.grid.containLabel"
-            on-change="ctrl.refresh()">
-            <label for="check-grid-containLabel" class="gf-form-label width-7 pointer">containLabel</label>
-            <div class="gf-form-switch ">
+        <label for="check-grid-containLabel" class="gf-form-switch-container" on-change="ctrl.refresh()">
+            <div class="gf-form-label width-7"> containLabel </div>
+            <div class="gf-form-switch">
                 <input id="check-grid-containLabel" type="checkbox"
                     ng-model="ctrl.panel.echarts.option.grid.containLabel" ng-change="ctrl.refresh()"
-                    class="ng-pristine ng-untouched ng-valid ng-not-empty">
-                <label for="check-grid-containLabel" data-on="Yes" data-off="No"></label>
+                    class="ng-valid ng-dirty ng-valid-parse ng-touched ng-not-empty">
+                <span class="gf-form-switch__slider"></span>
             </div>
-        </div>
+        </label>
     </div>
 
     <!-- X 轴配置 -->
@@ -120,15 +119,15 @@
                 ng-value="ctrl.panel.echarts.option.xAxis.nameGap" placeholder="15">
         </div>
         <!-- xAxis.splitLine.show -->
-        <div class="gf-form" checked="ctrl.panel.echarts.option.xAxis.splitLine.show" on-change="ctrl.refresh()">
-            <label for="check-xAxis-solitLine-show" class="gf-form-label width-8">splitLine.show</label>
-            <div class="gf-form-switch ">
+        <label for="check-xAxis-solitLine-show" class="gf-form-switch-container" on-change="ctrl.refresh()">
+            <div class="gf-form-label width-8"> splitLine.show </div>
+            <div class="gf-form-switch">
                 <input id="check-xAxis-solitLine-show" type="checkbox"
                     ng-model="ctrl.panel.echarts.option.xAxis.splitLine.show" ng-change="ctrl.refresh()"
-                    class="ng-pristine ng-untouched ng-valid ng-not-empty">
-                <label for="check-xAxis-solitLine-show" data-on="Yes" data-off="No"></label>
+                    class="ng-valid ng-dirty ng-valid-parse ng-touched ng-not-empty">
+                <span class="gf-form-switch__slider"></span>
             </div>
-        </div>
+        </label>
         <div class="gf-form" ng-if="ctrl.panel.echarts.option.xAxis.splitLine.show">
             <label class="gf-form-label width-8">lineStyle.type</label>
             <div class="gf-form-select-wrapper">
@@ -161,15 +160,15 @@
                 ng-value="ctrl.panel.echarts.option.yAxis.nameGap" placeholder="15">
         </div>
         <!-- yAxis.splitLine.show -->
-        <div class="gf-form" checked="ctrl.panel.echarts.option.yAxis.splitLine.show" on-change="ctrl.refresh()">
-            <label for="check-yAxis-solitLine-show" class="gf-form-label width-8">splitLine.show</label>
-            <div class="gf-form-switch ">
+        <label for="check-yAxis-solitLine-show" class="gf-form-switch-container" on-change="ctrl.refresh()">
+            <div class="gf-form-label width-8"> splitLine.show </div>
+            <div class="gf-form-switch">
                 <input id="check-yAxis-solitLine-show" type="checkbox"
                     ng-model="ctrl.panel.echarts.option.yAxis.splitLine.show" ng-change="ctrl.refresh()"
-                    class="ng-pristine ng-untouched ng-valid ng-not-empty">
-                <label for="check-yAxis-solitLine-show" data-on="Yes" data-off="No"></label>
+                    class="ng-valid ng-dirty ng-valid-parse ng-touched ng-not-empty">
+                <span class="gf-form-switch__slider"></span>
             </div>
-        </div>
+        </label>
         <div class="gf-form" ng-if="ctrl.panel.echarts.option.yAxis.splitLine.show">
             <label class="gf-form-label width-8">lineStyle.type</label>
             <div class="gf-form-select-wrapper">
