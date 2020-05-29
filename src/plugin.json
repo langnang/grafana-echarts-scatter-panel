@@ -1,16 +1,14 @@
 {
   "type": "panel",
-  "name": "Echarts Scatter Panel",
+  "name": "Scatter Echarts",
   "id": "echarts-scatter-panel",
   "info": {
-    "description": "Echarts Scatter Panel",
+    "description": "a scatter panel by echarts for grafana v6",
     "author": {
       "name": "Langnang",
       "url": "http://grafana.com"
     },
-    "keywords": [
-      "panel"
-    ],
+    "keywords": ["panel"],
     "logos": {
       "small": "src/img/logo.png",
       "large": "src/img/logo.png"

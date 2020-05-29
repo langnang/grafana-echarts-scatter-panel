@@ -1,5 +1,5 @@
 {
-  "name": "echarts-scatter-panel",
+  "name": "grafana-echarts-scatter-panel",
   "version": "3.0.0",
   "description": "a scatter panel by echarts for grafana v6",
   "main": "src/module.js",
